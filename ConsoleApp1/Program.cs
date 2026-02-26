@@ -128,3 +128,57 @@ public class Amphibian : Animal
         return $" Type: {TypeName},{base.GetInfo()}, Skin Moisture: {SkinMoisture}";
     }
 }
+
+public sealed class AnimalManager
+{
+    private static AnimalManager _instance;
+    private readonly List<Animal> animals;
+
+    private AnimalManager()
+    {
+        animals = new List<Animal>();
+    }
+
+    public static AnimalManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = new AnimalManager();
+            }
+            return _instance;
+        }
+    }
+
+    public void AddAnimal(Animal animal)
+    {
+        animals.Add(animal);
+    }
+
+    public void ShowAllAnimals()
+    {
+        if (animals.Count == 0)
+        {
+            Console.WriteLine("No animals found.");
+            return;
+        }
+
+        for (int animalIndex = 0; animalIndex < animals.Count; ++animalIndex)
+        {
+            Console.WriteLine($"[{animalIndex}] {animals[animalIndex].GetInfo()}");
+        }
+    }
+
+    public void ShowAnimalByName(string name)
+    {
+        for (int animalIndex = 0; animalIndex < animals.Count; ++animalIndex)
+        {
+            if (animals[animalIndex].Name == name)
+            {
+                Console.WriteLine(animals[animalIndex].GetInfo());
+                return;
+            }
+        }
+        Console.WriteLine("Animal with that name not found.");
+    }
